@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "CJRadarView.h"
 
-@interface ViewController ()
+
+@interface ViewController () <CJRadarViewDataSource>
+@property (weak, nonatomic) IBOutlet CJRadarView *radarView;
 
 @end
 
@@ -16,12 +19,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.radarView.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - DataSource
+- (NSInteger)numberOfRowForRadarView:(CJRadarView *)radarView {
+    return 4;
+}
+
+- (NSInteger)numberOfStepForRadarView:(CJRadarView *)radarView {
+    return 3;
+}
+
+- (NSInteger)numberOfSectionForRadarView:(CJRadarView *)radarView {
+    return 1;
 }
 
 @end

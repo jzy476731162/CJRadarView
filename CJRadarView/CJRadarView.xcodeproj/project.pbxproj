@@ -15,6 +15,7 @@
 		432536971D4F447400DD1C91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 432536951D4F447400DD1C91 /* LaunchScreen.storyboard */; };
 		432536A21D4F447400DD1C91 /* CJRadarViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432536A11D4F447400DD1C91 /* CJRadarViewTests.m */; };
 		432536AD1D4F447400DD1C91 /* CJRadarViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432536AC1D4F447400DD1C91 /* CJRadarViewUITests.m */; };
+		432536BD1D4F455300DD1C91 /* CJRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432536BC1D4F455300DD1C91 /* CJRadarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		432536A81D4F447400DD1C91 /* CJRadarViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CJRadarViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		432536AC1D4F447400DD1C91 /* CJRadarViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJRadarViewUITests.m; sourceTree = "<group>"; };
 		432536AE1D4F447400DD1C91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		432536BB1D4F455300DD1C91 /* CJRadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJRadarView.h; sourceTree = "<group>"; };
+		432536BC1D4F455300DD1C91 /* CJRadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJRadarView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,7 @@
 		432536861D4F447400DD1C91 /* CJRadarView */ = {
 			isa = PBXGroup;
 			children = (
+				432536BA1D4F455300DD1C91 /* CJRadarView */,
 				4325368A1D4F447400DD1C91 /* AppDelegate.h */,
 				4325368B1D4F447400DD1C91 /* AppDelegate.m */,
 				4325368D1D4F447400DD1C91 /* ViewController.h */,
@@ -138,6 +142,15 @@
 				432536AE1D4F447400DD1C91 /* Info.plist */,
 			);
 			path = CJRadarViewUITests;
+			sourceTree = "<group>";
+		};
+		432536BA1D4F455300DD1C91 /* CJRadarView */ = {
+			isa = PBXGroup;
+			children = (
+				432536BB1D4F455300DD1C91 /* CJRadarView.h */,
+				432536BC1D4F455300DD1C91 /* CJRadarView.m */,
+			);
+			path = CJRadarView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +285,7 @@
 			files = (
 				4325368F1D4F447400DD1C91 /* ViewController.m in Sources */,
 				4325368C1D4F447400DD1C91 /* AppDelegate.m in Sources */,
+				432536BD1D4F455300DD1C91 /* CJRadarView.m in Sources */,
 				432536891D4F447400DD1C91 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
