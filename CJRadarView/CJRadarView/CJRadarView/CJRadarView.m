@@ -22,6 +22,8 @@ static const NSInteger CJRadarViewBorderWidth = 2;
 @property (nonatomic, assign) NSInteger rowNum;
 @property (nonatomic, assign) NSInteger sectionNum;
 
+@property (nonatomic, assign) NSNumber *maxValue;
+
 @end
 
 @implementation CJRadarView
@@ -65,20 +67,35 @@ static const NSInteger CJRadarViewBorderWidth = 2;
     NSInteger stepNum;
     NSInteger rowNum;
     NSInteger sectionNum;
+    NSNumber * defaultMaxValue;
     if (self.dataSource) {
         stepNum = [self.dataSource numberOfStepForRadarView:self] ? : 1;
         rowNum = [self.dataSource numberOfRowForRadarView:self] > 2 ? [self.dataSource numberOfRowForRadarView:self]: 3;
         sectionNum = [self.dataSource numberOfSectionForRadarView:self] ? : 1;
+        defaultMaxValue = [self.dataSource maxValueOfRadarView:self] ? @([self.dataSource maxValueOfRadarView:self]) :@(10);
     }else {
         stepNum = 1;
         rowNum = 3;
         sectionNum = 1;
+        defaultMaxValue = @(10);
     }
     
     
     self.stepNum = stepNum;
     self.rowNum = rowNum;
     self.sectionNum = sectionNum;
+    
+    self.maxValue = defaultMaxValue;
+    if (!self.maxValue) {
+        for (int sectionIndex = 0; sectionIndex < sectionNum; sectionIndex++) {
+            NSArray *arr = [self.dataSource RadarView:self valuesInSection:sectionIndex];
+            for (NSNumber *number in arr) {
+                if ([number compare:self.maxValue] == NSOrderedAscending) {
+                    self.maxValue = number;
+                }
+            }
+        }
+    }
     
     self.lineSpacing = self.radius/stepNum;
     self.arcAngle = M_PI * 2/rowNum;
