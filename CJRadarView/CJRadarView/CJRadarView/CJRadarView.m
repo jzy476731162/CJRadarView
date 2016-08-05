@@ -27,6 +27,7 @@ static const NSInteger CJRadarViewBorderWidth = 2;
 
 @property (nonatomic, assign) NSNumber *maxValue;
 
+@property (nonatomic, strong) NSMutableArray *viewList;
 @end
 
 @implementation CJRadarView
@@ -147,16 +148,16 @@ static const NSInteger CJRadarViewBorderWidth = 2;
     }
     CGContextRestoreGState(context);
     
-    CJRadarSectionView *newView = [CJRadarSectionView defaultStyleWithSectionData:@[@(1),@(2),@(3),@(1)] centerPoint:self.center radius:self.radius columnCount:4 maxValue:[self.maxValue floatValue]];
-    newView.frame = self.frame;
-    newView.center = self.center;
-    
-    [self addSubview:newView];
-    
 }
 
 - (void)reloadData {
     [self setNeedsDisplay];
+    
+    if ([self.viewList count] != self.sectionNum) {
+        
+    }else {
+        
+    }
 }
 
 

@@ -22,11 +22,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.radarView.dataSource = self;
-    
-    CJRadarSectionView *newView = [CJRadarSectionView defaultStyleWithSectionData:@[@(1),@(2),@(3),@(1)] centerPoint:CGPointMake(200, 200) radius:50 columnCount:4 maxValue:5];
-    newView.frame = CGRectMake(200, 200, 200, 200);
-    
-    [self.view addSubview:newView];
 }
 
 - (void)didReceiveMemoryWarning {
