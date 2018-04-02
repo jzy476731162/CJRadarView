@@ -1,4 +1,4 @@
-//
+
 //  ViewController.m
 //  CJRadarView
 //
@@ -13,7 +13,7 @@
 
 
 @interface ViewController () <CJRadarViewDataSource>
-@property (weak, nonatomic) IBOutlet CJRadarView *radarView;
+@property (strong, nonatomic) IBOutlet CJRadarView *radarView;
 
 @end
 
@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.radarView.dataSource = self;
+    [self.radarView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,22 +30,19 @@
 }
 
 #pragma mark - DataSource
+//角数
 - (NSInteger)numberOfRowForRadarView:(CJRadarView *)radarView {
-    return 4;
+    return 6;
 }
-
+//每个角的数值
 - (NSInteger)numberOfStepForRadarView:(CJRadarView *)radarView {
     return 3;
 }
 
-- (NSInteger)numberOfSectionForRadarView:(CJRadarView *)radarView {
-    return 1;
+- (NSArray *)dataListForRadarView:(CJRadarView *)radarView {
+    return  @[@[@(1),@(2),@(3),@(4)],@[@(4),@(3),@(2),@(1)]];
 }
 
-
-- (NSArray *)RadarView:(CJRadarView *)radarView valuesInSection:(NSInteger)index {
-    return @[@[@(1),@(2),@(3),@(4)],@[@(4),@(3),@(2),@(1)]][index];
-}
 
 - (NSInteger)maxValueOfRadarView:(CJRadarView *)radarView {
     return 5;

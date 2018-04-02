@@ -47,6 +47,7 @@
 
 
 - (void)drawRect:(CGRect)rect {
+//    CGContextRef context = UIGraphicsGetCurrentContext();
     
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path setLineWidth:1];

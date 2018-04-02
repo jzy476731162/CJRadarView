@@ -225,6 +225,7 @@
 				TargetAttributes = {
 					432536831D4F447400DD1C91 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = H9XTCWVPD7;
 					};
 					4325369C1D4F447400DD1C91 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -435,9 +436,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H9XTCWVPD7;
 				INFOPLIST_FILE = CJRadarView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = CJ.CJRadarView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cj.CJRadarView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -446,9 +448,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H9XTCWVPD7;
 				INFOPLIST_FILE = CJRadarView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = CJ.CJRadarView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cj.CJRadarView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
