@@ -77,8 +77,8 @@
             [path closePath];
         }
     }
-    UIColor *lineColor = [UIColor colorWithRed:arc4random()%255/255 green:arc4random()%255/255 blue:arc4random()%255/255 alpha:0.3];
-    UIColor *contentColor = [UIColor colorWithRed:arc4random()%255/255 green:arc4random()%255/255 blue:arc4random()%255/255 alpha:0.1];
+    UIColor *lineColor = [UIColor colorWithRed:arc4random()%255/255 green:arc4random()%255/255 blue:arc4random()%255/255 alpha:0.7];
+    UIColor *contentColor = [UIColor colorWithRed:arc4random()%255/255 green:arc4random()%255/255 blue:arc4random()%255/255 alpha:0.6];
     [lineColor setStroke];
     [contentColor setFill];
     

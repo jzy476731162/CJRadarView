@@ -21,13 +21,9 @@
 
 - (NSInteger)numberOfStepForRadarView:(CJRadarView *)radarView;
 
-//- (NSInteger)numberOfSectionForRadarView:(CJRadarView *)radarView;
-
 - (NSInteger)numberOfRowForRadarView:(CJRadarView *)radarView;
 
 - (NSString *)titleOfRowForRadarView:(CJRadarView *)radarView;
-
-//- (NSArray *)RadarView:(CJRadarView *)radarView valuesInSection:(NSInteger)index;
 
 - (NSArray *)dataListForRadarView:(CJRadarView *)radarView;
 
