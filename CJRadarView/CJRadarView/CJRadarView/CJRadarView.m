@@ -12,7 +12,7 @@
 #import "CJRadarSectionView.h"
 
 
-static const NSInteger CJRadarViewBorderWidth = 2;
+static const NSInteger CJRadarViewBorderWidth = 10;
 
 @interface CJRadarView ()
 
@@ -33,6 +33,13 @@ static const NSInteger CJRadarViewBorderWidth = 2;
 @end
 
 @implementation CJRadarView
+
+- (NSMutableArray<CJRadarSectionView *> *)viewList {
+    if (!_viewList) {
+        _viewList = [NSMutableArray new];
+    }
+    return _viewList;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -70,66 +77,64 @@ static const NSInteger CJRadarViewBorderWidth = 2;
 
 
 - (void)resetRadarData {
-    NSInteger stepNum;
-    NSInteger rowNum;
-    NSInteger sectionNum;
-    NSNumber *defaultMaxValue;
-    NSArray *numList;
+    self.stepNum = [self.dataSource numberOfStepForRadarView:self] ? : 1;
+    self.rowNum = [self.dataSource numberOfRowForRadarView:self];
+    self.numList = [self.dataSource dataListForRadarView:self];
+    self.sectionNum = self.numList.count;
+    self.maxValue = @([self.dataSource maxValueOfRadarView:self]);
+    [self cleaningData:self.numList maxValue:self.maxValue rowNumber:@(self.rowNum)];
     
-    
-        stepNum = [self.dataSource numberOfStepForRadarView:self] ? : 1;
-        rowNum = [self.dataSource numberOfRowForRadarView:self] > 2 ? [self.dataSource numberOfRowForRadarView:self]: 3;
-        numList = [self.dataSource dataListForRadarView:self];
-        sectionNum = numList.count;
-        defaultMaxValue = [self.dataSource maxValueOfRadarView:self] ? @([self.dataSource maxValueOfRadarView:self]) :@(10);
-    
-    
-//    else {
-//        stepNum = 1;
-//        rowNum = 3;
-//        sectionNum = 1;
-//        defaultMaxValue = @(10);
-//    }
-    
-    
-    self.stepNum = stepNum;
-    self.rowNum = rowNum;
-    self.sectionNum = sectionNum;
-    self.numList = numList;
-    
-    self.maxValue = defaultMaxValue;
-    if (!self.maxValue) {
-        for (int sectionIndex = 0; sectionIndex < sectionNum; sectionIndex++) {
-            for (NSNumber *number in numList) {
-                if ([number compare:self.maxValue] == NSOrderedAscending) {
-                    self.maxValue = number;
-                }
+    self.lineSpacing = self.radius/ self.stepNum;
+    self.arcAngle = M_PI * 2/self.rowNum;
+}
+
+- (void)cleaningData:(NSArray *)dataList maxValue:(NSNumber *)max rowNumber:(NSNumber *)row{
+    //获取最大值
+    NSNumber *rowNumber = row;
+    for (NSArray *list in dataList) {
+        for (NSNumber *num in list) {
+            if ([num compare:self.maxValue] == NSOrderedDescending) {
+                self.maxValue = num;
             }
         }
+        if (list.count > [rowNumber integerValue]) {
+            rowNumber = @(list.count);
+        }
     }
+    self.rowNum = [rowNumber integerValue];
     
-    self.lineSpacing = self.radius/stepNum;
-    self.arcAngle = M_PI * 2/rowNum;
+    NSMutableArray *newList = [NSMutableArray new];
+    for (NSArray *list in dataList) {
+        NSMutableArray *partList = [NSMutableArray new];
+        for (NSInteger i = 0; i < [rowNumber integerValue]; i++) {
+            if (i < list.count) {
+                [partList addObject:list[i]];
+            }else {
+                [partList addObject:@(0)];
+            }
+        }
+        [newList addObject:partList];
+    }
+    self.numList = (NSArray *)newList;
 }
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-
+    
     //  Draw bottom Dash Line
     CGContextSaveGState(context);
     for (int i = 0; i < self.stepNum; i++) {
         UIBezierPath *path = [UIBezierPath bezierPath];
         CGPoint startPoint = CGPointMake(self.centerPoint.x, self.centerPoint.y - self.radius + (self.lineSpacing * i));
         [path moveToPoint:startPoint];
-
+        
         for (int row = 0; row <= self.rowNum; row ++) {
             CGFloat currentAngle = self.arcAngle * row;
-
+            
             CGPoint endPoint = CGPointMake(self.centerPoint.x + sin(currentAngle) * (self.radius - i * self.lineSpacing), self.centerPoint.y - cos(currentAngle) * (self.radius - i * self.lineSpacing));
             [path addLineToPoint:endPoint];
         }
-
-
+        
         if (self.enableBgColorFade) {
             const CGFloat *colors = CGColorGetComponents([self.lineColor CGColor]);
             [[UIColor colorWithRed:colors[0] green:colors[1] blue:colors[2] alpha:0.5/self.stepNum] setFill];
@@ -137,17 +142,17 @@ static const NSInteger CJRadarViewBorderWidth = 2;
         }
         CGFloat dash[] = {1, 1};
         [path setLineDash:dash count:1 phase:0];
-
-
+        
+        
         [self.lineColor setStroke];
         [path setLineWidth:1];
-
+        
         [path stroke];
     }
-
+    
     for (int row = 0; row < self.rowNum; row ++) {
         CGFloat currentAngle = self.arcAngle * row;
-
+        
         CGPoint endPoint = CGPointMake(self.centerPoint.x + sin(currentAngle) * self.radius, self.centerPoint.y - cos(currentAngle) * self.radius);
         CGContextMoveToPoint(context, self.centerPoint.x, self.centerPoint.y);
         CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
@@ -159,7 +164,6 @@ static const NSInteger CJRadarViewBorderWidth = 2;
     CGContextRestoreGState(context);
     
     //Draw Content View
-    
 }
 
 - (void)reloadData {
@@ -172,19 +176,17 @@ static const NSInteger CJRadarViewBorderWidth = 2;
     }
     
     for (NSUInteger i = 0; i < self.sectionNum; i++) {
-        if (i > self.viewList.count - 1) {
-            CJRadarSectionView *view = [CJRadarSectionView defaultStyleWithSectionData:self.numList[i] centerPoint:self.center radius:self.radius columnCount:self.rowNum maxValue:[self.maxValue floatValue]];
+        if (self.viewList.count >= i) {
+            CJRadarSectionView *view = [CJRadarSectionView defaultStyleWithSectionData:self.numList[i] radius:self.radius maxValue:[self.maxValue floatValue] frame:self.bounds];
             [self.viewList addObject:view];
             [self addSubview:view];
+            
         }else {
-            [self.viewList[i] reloadRadarSectionViewWithData:self.numList[i] centerPoint:self.centerPoint radius:self.radius columnCount:self.rowNum maxValue:[self.maxValue floatValue]];
+            [self.viewList[i] reloadRadarSectionViewWithData:self.numList[i] radius:self.radius maxValue:[self.maxValue floatValue]];
             [self addSubview:self.viewList[i]];
         }
     }
 }
 
-
-
-
-
 @end
+
