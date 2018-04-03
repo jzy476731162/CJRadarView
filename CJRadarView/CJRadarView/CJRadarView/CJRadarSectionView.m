@@ -7,8 +7,21 @@
 //
 
 #import "CJRadarSectionView.h"
+#import "NSString+FormattedNumber.h"
+
+@interface CJRadarSectionView()
+@property (nonatomic, strong) UIBezierPath *path;
+@property (nonatomic, strong) NSMutableArray <CATextLayer *>*valueLayers;
+@end
 
 @implementation CJRadarSectionView
+
+- (NSMutableArray<CATextLayer *> *)valueLayers {
+    if (!_valueLayers) {
+        _valueLayers = [NSMutableArray new];
+    }
+    return _valueLayers;
+}
 
 + (instancetype)defaultStyleWithSectionData:(NSArray *)data radius:(CGFloat)radius maxValue:(CGFloat)maxValue frame:(CGRect)frame{
     CJRadarSectionView *radar = [[CJRadarSectionView alloc] init];
@@ -65,8 +78,35 @@
     
     for (int index = 0; index < self.columnCount; index ++) {
         CGFloat scale = [self.data[index] floatValue]/self.maxValue;
-
-        CGPoint point = [CJRadarSectionView getPointWithCenter:self.centerPoint arc:(index * 2 * M_PI / self.columnCount) radius:self.radius scale:scale];
+        
+        CGFloat arc = (index * 2 * M_PI / self.columnCount);
+        CGPoint point = [CJRadarSectionView getPointWithCenter:self.centerPoint arc:arc radius:self.radius scale:scale];
+        
+        CATextLayer *layer;
+        if (index < self.valueLayers.count) {
+            layer = self.valueLayers[index];
+        }else {
+            layer = [CATextLayer layer];
+            UIFont *font = [UIFont systemFontOfSize:10];
+            CFStringRef fontName = (__bridge CFStringRef)font.fontName;
+            CGFontRef fontRef = CGFontCreateWithFontName(fontName);
+            [layer setFont:fontRef];
+            [layer setFontSize:font.pointSize];
+            [layer setForegroundColor:[UIColor redColor].CGColor];
+            
+            CGFloat yValue =  point.y - 10 * cos(arc) - 5;
+            
+            layer.frame = CGRectMake(point.x + 5 * sin(arc) - 2.5, yValue, 40, 10);
+            
+            [layer setContentsScale:[UIScreen mainScreen].scale * 2];
+            CGFontRelease(fontRef);
+            [self.valueLayers addObject:layer];
+        }
+        
+        [layer setString:[NSString formattedFloatString:[self.data[index] floatValue]]];
+        [self.layer addSublayer:layer];
+        
+        
         if (index == 0) {
             [path moveToPoint:point];
         }else {
@@ -84,6 +124,38 @@
     
     [path fill];
     [path stroke];
+    
+    self.path = path;
+    
+}
+
+#pragma mark - Touch Event
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    NSLog(@"touchBegan");
+    [UIView animateWithDuration:0.2 animations:^{
+        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
+    }];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    NSLog(@"touchEnded");
+    
+        [UIView animateWithDuration:0.2 animations:^{
+                self.transform = CGAffineTransformIdentity;
+        } completion:nil];
+    
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    NSLog(@"touchCancelled");
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if ([self.path containsPoint:point]) {
+        return true;
+    }else {
+        return false;
+    }
 }
 
 

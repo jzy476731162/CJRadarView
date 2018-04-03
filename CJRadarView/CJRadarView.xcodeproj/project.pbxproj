@@ -17,6 +17,7 @@
 		432536AD1D4F447400DD1C91 /* CJRadarViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432536AC1D4F447400DD1C91 /* CJRadarViewUITests.m */; };
 		432536BD1D4F455300DD1C91 /* CJRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432536BC1D4F455300DD1C91 /* CJRadarView.m */; };
 		432536C01D50862600DD1C91 /* CJRadarSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432536BF1D50862600DD1C91 /* CJRadarSectionView.m */; };
+		43C3B98220737CD30096B26D /* NSString+FormattedNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C3B98120737CD30096B26D /* NSString+FormattedNumber.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		432536BC1D4F455300DD1C91 /* CJRadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJRadarView.m; sourceTree = "<group>"; };
 		432536BE1D50862600DD1C91 /* CJRadarSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJRadarSectionView.h; sourceTree = "<group>"; };
 		432536BF1D50862600DD1C91 /* CJRadarSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJRadarSectionView.m; sourceTree = "<group>"; };
+		43C3B98020737CD30096B26D /* NSString+FormattedNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+FormattedNumber.h"; sourceTree = "<group>"; };
+		43C3B98120737CD30096B26D /* NSString+FormattedNumber.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+FormattedNumber.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,8 @@
 				432536BC1D4F455300DD1C91 /* CJRadarView.m */,
 				432536BE1D50862600DD1C91 /* CJRadarSectionView.h */,
 				432536BF1D50862600DD1C91 /* CJRadarSectionView.m */,
+				43C3B98020737CD30096B26D /* NSString+FormattedNumber.h */,
+				43C3B98120737CD30096B26D /* NSString+FormattedNumber.m */,
 			);
 			path = CJRadarView;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 				4325368F1D4F447400DD1C91 /* ViewController.m in Sources */,
 				4325368C1D4F447400DD1C91 /* AppDelegate.m in Sources */,
 				432536BD1D4F455300DD1C91 /* CJRadarView.m in Sources */,
+				43C3B98220737CD30096B26D /* NSString+FormattedNumber.m in Sources */,
 				432536891D4F447400DD1C91 /* main.m in Sources */,
 				432536C01D50862600DD1C91 /* CJRadarSectionView.m in Sources */,
 			);

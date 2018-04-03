@@ -32,7 +32,7 @@
 #pragma mark - DataSource
 //角数
 - (NSInteger)numberOfRowForRadarView:(CJRadarView *)radarView {
-    return 30;
+    return 4;
 }
 //每个角的数值
 - (NSInteger)numberOfStepForRadarView:(CJRadarView *)radarView {
@@ -40,7 +40,8 @@
 }
 
 - (NSArray *)dataListForRadarView:(CJRadarView *)radarView {
-    return  @[@[@(1),@(2),@(3),@(4)],@[@(6),@(3.5),@(2.5),@(1)],@[@(2),@(2),@(2),@(2)]];//,@[@(4),@(3),@(2),@(1)]]
+    return  @[@[@(1),@(2),@(3),@(4),@(1),@(2),@(3),@(4)]];
+//              ,@[@(6),@(3.5),@(2.5),@(1)],@[@(2),@(2),@(2),@(2)]];//,@[@(4),@(3),@(2),@(1)]]
 }
 
 
