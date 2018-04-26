@@ -26,6 +26,7 @@ static const NSInteger CJRadarViewBorderWidth = 10;
 @property (nonatomic, assign) NSInteger rowNum;
 @property (nonatomic, assign) NSInteger sectionNum;
 @property (nonatomic, strong) NSArray *numList;
+@property (nonatomic, strong) NSArray *titleList;
 
 @property (nonatomic, strong) NSNumber *maxValue;
 
@@ -78,7 +79,8 @@ static const NSInteger CJRadarViewBorderWidth = 10;
 
 - (void)resetRadarData {
     self.stepNum = [self.dataSource numberOfStepForRadarView:self] ? : 1;
-    self.rowNum = [self.dataSource numberOfRowForRadarView:self];
+    self.titleList = [self.dataSource titleOfRowForRadarView:self];
+    self.rowNum = self.titleList.count;
     self.numList = [self.dataSource dataListForRadarView:self];
     self.sectionNum = self.numList.count;
     self.maxValue = @([self.dataSource maxValueOfRadarView:self]);
@@ -89,24 +91,24 @@ static const NSInteger CJRadarViewBorderWidth = 10;
 }
 
 - (void)cleaningData:(NSArray *)dataList maxValue:(NSNumber *)max rowNumber:(NSNumber *)row{
-    //获取最大值
-    NSNumber *rowNumber = row;
-    for (NSArray *list in dataList) {
-        for (NSNumber *num in list) {
-            if ([num compare:self.maxValue] == NSOrderedDescending) {
-                self.maxValue = num;
-            }
-        }
-        if (list.count > [rowNumber integerValue]) {
-            rowNumber = @(list.count);
-        }
-    }
-    self.rowNum = [rowNumber integerValue];
+//    //获取最大值
+//    NSNumber *rowNumber = row;
+//    for (NSArray *list in dataList) {
+//        for (NSNumber *num in list) {
+//            if ([num compare:self.maxValue] == NSOrderedDescending) {
+//                self.maxValue = num;
+//            }
+//        }
+//        if (list.count > [rowNumber integerValue]) {
+//            rowNumber = @(list.count);
+//        }
+//    }
+//    self.rowNum = [rowNumber integerValue];
     
     NSMutableArray *newList = [NSMutableArray new];
     for (NSArray *list in dataList) {
         NSMutableArray *partList = [NSMutableArray new];
-        for (NSInteger i = 0; i < [rowNumber integerValue]; i++) {
+        for (NSInteger i = 0; i < self.rowNum; i++) {
             if (i < list.count) {
                 [partList addObject:list[i]];
             }else {
@@ -176,7 +178,7 @@ static const NSInteger CJRadarViewBorderWidth = 10;
     }
     
     for (NSUInteger i = 0; i < self.sectionNum; i++) {
-        if (self.viewList.count >= i) {
+        if (self.viewList.count < i + 1) {
             CJRadarSectionView *view = [CJRadarSectionView defaultStyleWithSectionData:self.numList[i] radius:self.radius maxValue:[self.maxValue floatValue] frame:self.bounds];
             [self.viewList addObject:view];
             [self addSubview:view];

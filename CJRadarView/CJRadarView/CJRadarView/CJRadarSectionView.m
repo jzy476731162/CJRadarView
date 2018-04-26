@@ -35,6 +35,7 @@
     radar.frame = frame;
     [radar resetMaxValue:data Max:maxValue];
     
+    [radar animation];
     return radar;
 }
 
@@ -44,9 +45,22 @@
     self.columnCount = data.count;
     [self resetMaxValue:data Max:maxValue];
     
-    [self layoutIfNeeded];
+    [self animation];
+//    [UIView animateWithDuration:0.1 animations:^{
+//         [self layoutIfNeeded];
+//        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+//    }];
+   
     
     return self;
+}
+
+- (void)animation {
+    self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.2, 0.2);
+    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [self layoutIfNeeded];
+        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+    } completion:nil];
 }
 
 
@@ -90,6 +104,7 @@
             UIFont *font = [UIFont systemFontOfSize:10];
             CFStringRef fontName = (__bridge CFStringRef)font.fontName;
             CGFontRef fontRef = CGFontCreateWithFontName(fontName);
+            [layer setContentsScale:[UIScreen mainScreen].scale];
             [layer setFont:fontRef];
             [layer setFontSize:font.pointSize];
             [layer setForegroundColor:[UIColor redColor].CGColor];
@@ -131,32 +146,30 @@
 
 #pragma mark - Touch Event
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchBegan");
+    [self.superview bringSubviewToFront:self];
     [UIView animateWithDuration:0.2 animations:^{
         self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
     }];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchEnded");
-    
-        [UIView animateWithDuration:0.2 animations:^{
-                self.transform = CGAffineTransformIdentity;
-        } completion:nil];
-    
-}
-
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchCancelled");
+    [UIView animateWithDuration:0.2 animations:^{
+        self.transform = CGAffineTransformIdentity;
+    } completion:nil];
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    if ([self.path containsPoint:point]) {
+    CGPoint convertedPoint = [self convertPoint:point fromView:self.superview];
+    if ([self.path containsPoint:convertedPoint]) {
         return true;
-    }else {
-        return false;
     }
+    return false;
 }
+
+//- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    NSLog(@"touchCancelled");
+//}
+
 
 
 @end

@@ -35,10 +35,19 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableBgColorFade" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3QV-9g-pyb">
+                                <rect key="frame" x="42" y="84" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="reload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SZa-x7-bKw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="E2F-bN-0Iz" firstAttribute="top" secondItem="3QV-9g-pyb" secondAttribute="bottom" constant="32" id="82R-mj-8Sb"/>
                             <constraint firstItem="E2F-bN-0Iz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="DnJ-sg-e7F"/>
+                            <constraint firstItem="3QV-9g-pyb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="42" id="h0b-yn-dfY"/>
                             <constraint firstItem="E2F-bN-0Iz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lov-wz-pMV"/>
                             <constraint firstItem="E2F-bN-0Iz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="peJ-qs-eBe"/>
                         </constraints>

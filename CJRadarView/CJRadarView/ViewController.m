@@ -29,19 +29,24 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - DataSource
-//角数
-- (NSInteger)numberOfRowForRadarView:(CJRadarView *)radarView {
-    return 4;
+- (IBAction)reload:(id)sender {
+    [self.radarView reloadData];
 }
+
+#pragma mark - DataSource
 //每个角的数值
 - (NSInteger)numberOfStepForRadarView:(CJRadarView *)radarView {
     return 3;
 }
 
 - (NSArray *)dataListForRadarView:(CJRadarView *)radarView {
-    return  @[@[@(1),@(2),@(3),@(4),@(1),@(2),@(3),@(4)]];
+//    return  @[@[@(1),@(2),@(3),@(4),@(1),@(2),@(3),@(4)]];
+    return @[@[@(6),@(3.5),@(2.5),@(1)],@[@(2),@(2),@(2),@(2)]];
 //              ,@[@(6),@(3.5),@(2.5),@(1)],@[@(2),@(2),@(2),@(2)]];//,@[@(4),@(3),@(2),@(1)]]
+}
+
+- (NSArray *)titleOfRowForRadarView:(CJRadarView *)radarView {
+    return @[@"标题1", @"标题2", @"标题3", @"标题4"];
 }
 
 

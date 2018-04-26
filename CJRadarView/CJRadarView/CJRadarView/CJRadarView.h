@@ -21,9 +21,7 @@
 
 - (NSInteger)numberOfStepForRadarView:(CJRadarView *)radarView;
 
-- (NSInteger)numberOfRowForRadarView:(CJRadarView *)radarView;
-
-- (NSString *)titleOfRowForRadarView:(CJRadarView *)radarView;
+- (NSArray *)titleOfRowForRadarView:(CJRadarView *)radarView;
 
 - (NSArray *)dataListForRadarView:(CJRadarView *)radarView;
 
@@ -31,6 +29,8 @@
 
 IB_DESIGNABLE
 @interface CJRadarView : UIView <CJRadarViewDataSource>
+
+@property (nonatomic, assign) NSInteger fontSize;
 
 @property (nonatomic, strong)IBInspectable UIColor *lineColor;
 
